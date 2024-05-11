@@ -63,3 +63,8 @@ print("\nBFS:")
 bfs(graph, 'A')
 print("\nDijkstra:")
 dijkstra(graph,'A')
+
+# Time Complexities
+# DFS: O(V + E); Explores the graph level by level, visiting all reachable vertices.
+# BFS: O(V + E); Explores the graph by traversing one path as far as possible before backtracking.
+# Dijkstra's Algorithm:  O(V log V + E) (Fibonacci Heap); Finds the shortest paths based on edge weights using a priority queue.
