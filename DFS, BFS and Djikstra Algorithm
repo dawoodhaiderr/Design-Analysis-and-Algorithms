@@ -1,0 +1,65 @@
+from collections import defaultdict
+import heapq
+
+def add_edge(graph, u, v, weight=0):
+    graph[u].append((v, weight))
+
+def dfs_util(graph, v, visited):
+    visited.add(v)
+    print(v, end=' ')
+
+    for neighbor, _ in graph[v]:
+        if neighbor not in visited:
+            dfs_util(graph, neighbor, visited)
+
+def dfs(graph, start):
+    visited = set()
+    dfs_util(graph, start, visited)
+
+def bfs(graph, start):
+    visited = set()
+    queue = [start]
+
+    while queue:
+        vertex = queue.pop(0)
+        if vertex not in visited:
+            print(vertex, end=' ')
+            visited.add(vertex)
+            queue.extend(neigh for neigh, _ in graph[vertex] if neigh not in visited)
+
+def dijkstra(graph, start):
+    pq = [(0, start)]
+    dist = {node: float('inf') for node in graph}
+    dist[start] = 0
+
+    while pq:
+        distance, node = heapq.heappop(pq)
+
+        if distance > dist[node]:
+
+        for neighbor, weight in graph[node]:
+            if dist[node] + weight < dist[neighbor]:
+                dist[neighbor] = dist[node] + weight
+                heapq.heappush(pq, (dist[neighbor], neighbor))
+
+    print("Vertex   Distance from Source")
+    for node in dist:
+        print(f"{node}\t  {dist[node]}")
+
+#usage
+graph = defaultdict(list)
+add_edge(graph, 'A', 'B', 5)
+add_edge(graph, 'A', 'C', 3)
+add_edge(graph, 'B', 'D', 9)
+add_edge(graph, 'B', 'E', 2)
+add_edge(graph, 'C', 'F', 4)
+add_edge(graph, 'D', 'G', 7)
+add_edge(graph, 'E', 'H', 1)
+add_edge(graph, 'F', 'I', 6)
+
+print("DFS:")
+dfs(graph, 'A')
+print("\nBFS:")
+bfs(graph, 'A')
+print("\nDijkstra:")
+dijkstra(graph,'A')
